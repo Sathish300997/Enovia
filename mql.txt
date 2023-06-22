@@ -1,0 +1,189 @@
+
+
+course*************************************************
+add attribute IZICourseName type string;
+add attribute IZICourseFees type string;
+add type IZICourse attribute IZICourseName attribute IZICourseFees;
+
+---------------------------------------------------------------
+
+
+Student**************************************************
+add attribute IZIStudentName type string;
+add attribute IZIStudentMark type integer;
+add attribute IZIStudentID type integer;
+add type IZIStudent attribute IZIStudentID  attribute IZIStudentMark attribute IZIStudentName;
+mod type IZIStudent add attribute IZICourseName;
+------------------------------------------------------------------
+
+Faculty******************************************************
+
+add attribute IZIFacultyName type string;
+add attribute IZIFacultyID type integer;
+add type IZIFaculty attribute IZIFacultyName attribute IZIFacultyID;
+
+
+--------------------------------------------------------------------
+
+Menu**********************************************************
+
+add menu IZITrainingInstitute label "Training Institute";
+
+-----------------------------------------------------------------
+
+WebForm**********************************************************
+
+//add form IZICourseForm web type IZICourse field name attribute label Fees select IZICourseFees field name attribute label CourseName select IZICourseName;
+
+mod form IZICourseForm web type IZICourse field label Fees select attribute[IZICourseFees] setting "Field Type" attribute field label CourseName select attribute[IZICourseName] setting "Field Type" attribute;
+-----------------------------------------------------------------------
+Command******************************************************
+
+add command IZCourseCmd label Course href ${COMMON_DIR}/emxCreate.jsp?form=IZICourseForm&header=Course&type=IZICourse;
+----------------------------------------------------------------------
+Mod_Menu***********************************************************
+
+mod menu IZITrainingInstitute add command IZCourseCmd;
+
+----------------------------------------------------------------------
+Student************************************************************
+
+//add form IZIStudentForm web type IZIStudent field name attribute label StudentName select IZIStudentName field name attribute label StudentMark select IZIStudentMark field name attribute label course select IZICourseName;
+add command IZIStudentCmd label Student href ${COMMON_DIR}/emxCreate.jsp?form=IZIStudentForm&header=StudentDetails&type=IZIStudent;
+mod menu IZITrainingInstitute add command IZIStudentCmd;
+
+mod form IZIStudentForm web add field name attribute label StudentMark select attribute[IZIStudentMark];
+
+mod form IZIStudentForm web type IZIStudent field label StudentName select attribute[IZIStudentName] setting "Field Type" attribute field label StudentMark select attribute[IZIStudentMark] setting "Field Type" attribute field label course select attribute[IZICourseName] setting "Field Type" attribute;
+----------------------------------------------------------------------------
+Faculty*********************************************************
+
+//add form IZIFacultyForm web type IZIFaculty field name attribute label FacultyName select IZIFacultyName field name attribute label FacultyID select IZIFaculty;
+add command IZIFAcultyCmd label Faculty href ${COMMON_DIR}/emxCreate.jsp?form=IZIFacultyForm&header=FacultyDetails&type=IZIFaculty;
+mod menu IZITrainingInstitute add command IZIFAcultyCmd;
+//mod form IZIFacultyForm web field name attribute label Course select attribute[IZICourseName];
+
+mod form IZIFacultyForm web type IZIFaculty field label FacultyName select attribute[IZIFacultyName] setting "Field Type" attribute field label FacultyID select attribute[IZIFacultyID] setting "Field Type" attribute field label Course select attribute[IZICourseName] setting "Field Type" attribute;
+
+
+--------------------------------------------------------------------------------
+Policy**********************************************************************
+
+add policy IZCoursePolicy type IZICourse sequence 1,2,3,... state Enrollment promote true public all state Assessment promote true public all state Completion promote true public all;
+add policy IZStudentPolicy type IZIStudent sequence 1,2,3,... state active promote true public all state inactive promote true public all;
+add policy IZFacultyPolicy type IZIFaculty sequence 1,2,3,... state active promote true public all state inactive promote true public all;
+
+registation*****************************************************************
+
+mod program eServiceSchemaVariableMapping.tcl add property type_IZICourse to type IZICourse;
+mod program eServiceSchemaVariableMapping.tcl add property type_IZIStudent to type IZIStudent;
+mod program eServiceSchemaVariableMapping.tcl add property type_IZIFaculty to type IZIFaculty;
+
+___________________----------------_______________________________----------------------______________________________________
+
+RelationShip********************************************************************
+
+add rel IZICourseRel from type IZICourse to type IZIStudent to type IZIFaculty;
+add rel IZIStuFacRel from type IZIStudent to type IZIFaculty;
+
+-------------------------------------------------------------------------------------
+
+********************************************************************************************
+
+add menu IZITrainingInstituteTable label "Training Institute" command IZIInstituteCmd;
+
+add command IZIInstituteCmd label Details href ${COMMON_DIR}/emxIndentedTable.jsp?inquiry=IZIInstituteInquiry&header=Institute&table=IZIInstituteTable&selection=multiple;
+
+add inquiry IZIInstituteInquiry pattern *|*|*|${OID} format ${OID} code 'temp query bus IZICourse * * select id dump |; temp query bus IZIStudent * * select id dump |; temp query bus IZIFaculty * * select id dump |;';
+
+
+
+add table IZIInstituteTable system column label CourseFees bus attribute[IZICourseFees] column label CourseName bus attribute[IZICourseName] column label FacultyID bus attribute[IZIFacultyID] column label FacultyName bus attribute[IZIFacultyName] column label StudentName bus attribute[IZIStudentName] column label StudentMark bus attribute[IZIStudentMark];
+
+mod menu ECMMyDesk add menu IZITrainingInstituteTable;
+
+
+//mod table IZIInstituteTable system column label CourseFees bus href ../common/emxTree.jsp?mode=insert;
+
+
+../common/emxTree.jsp?mode=insert
+
+
+mod command IZIFAcultyCmd add setting "Target Location" slidein;
+
+mod command IZIStudentCmd add setting "Target Location" slidein;
+
+mod command IZCourseCmd add setting "Target Location" slidein;
+
+mod command IZIInstituteCmd add setting "Target Location" content;
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ not execute--- 
+ECM_Portal -> ${COMMON_DIR}/emxPortal.jsp?portal=ECMMyChangesPortal&header=EnterpriseChangeMgt.Heading.ChangeManagement&showPageHeader=true&HelpMarker=false
+
+CMD -> ${COMMON_DIR}/emxIndentedTable.jsp?table=ECMChangeOrderSummary&program=enoECMChangeOrder:getMyChangeOrders&direction=from&relationshipFilter=false&selection=multiple&toolbar=ECMCOMenuToolbar&showPageHeader=true&typeFilter=false&relationship=relationship_ChangeAction&editLink=false&header=EnterpriseChangeMgt.Menu.ECM&HelpMarker=emxhelpchangeorder
+
+Image -->
+<img border="0" src="../common/images/iconColHeadStatus.gif" />
+
+Column Type = programHTMLOutput
+function = showChangeStatus
+
+
+expand bus ${ID} from relationship ${REL_SUPPLIER} select businessobject id select relationship id dump |
+
+expand bus IZCourse java 1 from rel IZICourseRel select bus id from[IZIStuFacRel].id dump |;
+
+${RELID}~${OID}  *|*|*|*|*|*|${OID}|${RELID}
+
+
+expand bus "${ID}" from relationship "${RELATIONSHIP_VERSION}" select bus id dump |;
+*|*|*|*|*|*|${OID}     ${OID}
+
+
+expand bus IZCourse course003 1 from recurse to all rel IZICourseRel;
+
+expand bus IZtype2 IZn01 1 from rel IZr  select bus from[IZr3].to.attribute[IZTestattribute].value; 
+
+
+connect bus IZICourse course003 1 rel IZICourseRel to IZIStudent student001 1;
+
+
+connect bus IZICourse course003 1 rel IZICourseRel to IZIFaculty faculty001 1;
+
+connect bus IZIStudent student001 1 rel IZIStuFacRel to IZIFaculty faculty001 1;
+
+
+
+expand bus IZICourse course003 1 from recurse to all select bus attribute.value;
+
+
+-----------------------temp query bus IZICourse * * select id dump |; temp query bus IZIStudent * * select id dump |; temp query bus IZIFaculty * * select id dump |;
+*|*|*|${OID}    ${OID}
+
+
+
+---------> expand bus IZICourse course003 1 from recurse to all select bus attribute.value dump |;
+
+expand bus "${ID}" from relationship "${RELATIONSHIP_DOCUMENTSHEETS}" select bus id dump |
+
+temp query bus "${type_ServiceKey}" * * where '(attribute[${attribute_WSKeyApplicationID}].value=="CBPWS")' select id dump |
+
+
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+My Desk Menu creation::::
+
+add command IZITInstitute label "Institute Details";
+add portal IZIInstitutePortal label Institute setting "Registered Suite" EnterpriseChangeMgt;
+
+mod command IZITInstitute href ${COMMON_DIR}/emxPortal.jsp?portal=IZIInstitutePortal;
+mod menu ECMMyDesk add command IZITInstitute;
+
+add channel IZIInstituteChannel label InstituteChannel Height 250;
+
+//add command IZIStudentC label "Student Details" href ${COMMON_DIR}/emxIndentedTable.jsp?table=ECMChangeOrderSummary&program=enoECMChangeOrder:getMyChangeOrders&direction=from&relationshipFilter=false&selection=multiple&toolbar=ECMCOMenuToolbar&showPageHeader=true&typeFilter=false&relationship=relationship_ChangeAction&editLink=false&header=EnterpriseChangeMgt.Menu.ECM&HelpMarker=emxhelpchangeorder;
+
+//mod channel IZIInstituteChannel add command IZIStudentC;
