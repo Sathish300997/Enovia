@@ -1,0 +1,155 @@
+System.out.println(d.reviseObject(context, true));	--> revise the object
+
+System.out.println(d.getRevision(context));  --> get the revise object
+
+System.out.println(d.exists(context));(true or false)	  --> check the bus 
+
+System.out.println(d.getHistory(context));	  - list the history
+
+System.out.println(d.getId());   
+
+System.out.println(d.getInfo(context, s));	- get the business object information
+
+RelationshipType r=new RelationshipType("IZICourseRel");   ----> get the relationship attribute
+System.out.println(r.getAttributeTypes(context));
+
+
+RelationshipType r1=new RelationshipType("IZICourseRel");
+	  
+	  System.out.println(r1.getAttributeTypes(context));
+	  System.out.println(r1.getFromCardinality(context, true)); 
+	  System.out.println(r1.getToCardinality(context,true));
+	  
+	  many - 1
+	  one - 0
+	  
+System.out.println(r1.getFromTypes(context));  --> it gets from type in relationship
+
+System.out.println(r1.getToTypes(context));	  ---> it gets to type in relationship
+
+System.out.println(r1.getFromUponRevision()); 0,1,2 - revision(none,float,replicate)
+System.out.println(r1.getToUponRevision());  0,1,2 - revision(none,float,replicate)
+
+
+System.out.println(dom1.findObjects(context, "IZ*", "*", "", stl));  --> it is similar to temp query bus
+
+*************************************************************   expand bus  IZICourse Course-002 1 rel IZICourseRel from recurse to all;
+StringList stl=new StringList();
+//stl.add("type");
+stl.add("name");
+stl.add("id");
+
+DomainObject dom1= new DomainObject(oid);
+//System.out.println(dom1.findObjects(context, "IZ*", "*", "", stl));
+
+
+//@SuppressWarnings("deprecation")
+MapList objList = dom1.getRelatedObjects( context,
+		"*",       //relationship
+        "*",       // type
+        stl,       // string list
+        null,      
+        false,     // to rel
+        true,      // from rel
+        (short)1,  // level
+        "",
+        null);
+
+
+System.out.println(objList);
+
+**********************************************************************
+
+System.out.println(dom.getAllRelationship(context)  --> it return objectid of connected objects.
+
+
+System.out.println(dom.getForms(context, true, true, true));	  ---> it returns the form name.
+
+System.out.println(dom.getBasicInfo(context));
+
+
+
+
+String dom1= "48088.47334.45184.58176";
+	  DomainObject dom= new DomainObject(dom1);    // 48088.47334.45184.58176  ---> it delete the bus object.
+	dom.delete(context);
+	
+	
+	 dom.promote(context);
+     dom.demote(context);
+	 
+	
+***************************************************************************************************************
+	checkin businessobject IZICourse Course-002 1 format generic  store STORE "D:\ruvith.txt";
+	 
+	 checkout bus IZICourse Course-002 1 format generic file all "D:\";
+***************************************************************************************************************
+
+CheckIn
+
+import com.matrixone.apps.domain.DomainObject;
+
+import matrix.db.Context;
+
+public class checkINBus_mxJPO {
+	
+	public checkINBus_mxJPO (Context context, String[] args) throws Exception{}
+	
+	public int mxMain(Context context, String[] args) throws Exception
+	{
+		 String oid="48088.47334.54136.29180";
+			
+			  DomainObject dom= new DomainObject(oid);   
+			//  String strTransPath = context.createWorkspace();
+			  String sFilename="Domain name.txt";
+			  String sFolder="D:/Ruvith A";
+		
+			  dom.checkinFile(context, true, false, "", "generic", sFilename, sFolder);
+			  
+		  System.out.println("done");
+		
+	return 0;
+	}
+
+}
+
+******************************************************************************************************************
+checkout
+
+import com.matrixone.apps.domain.DomainObject;
+
+import matrix.db.Context;
+
+public class checkOutBus_mxJPO {
+	
+	public checkOutBus_mxJPO (Context context, String[] args) throws Exception{}
+	
+	public int mxMain(Context context, String[] args) throws Exception
+	{
+		 String oid="48088.47334.54136.29180";
+			
+			  DomainObject dom= new DomainObject(oid);   
+			//  String strTransPath = context.createWorkspace();
+			  String sFilename="Domain name.txt";
+			  String sFolder="D:/Ruvith A";
+		
+			//  dom.checkinFile(context, true, false, "", "generic", sFilename, sFolder);
+			
+			dom.checkoutFile(context, false, "generic", sFilename, "D:/Ruvith A/widget");
+			  
+		  System.out.println("done");
+		
+	return 0;
+	}
+
+}
+
+--------------------------------------------------------------------
+
+System.out.println(dom.getOwner(context));	  --> get the owner
+
+dom.changeOwner(context, "TestPM");  -->   change the owner
+
+System.out.println(dom.getVault());   ---> get the vault name
+
+dom.changeVault(context, "eService Sample");   ----> change the vault name
