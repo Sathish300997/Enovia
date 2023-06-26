@@ -153,3 +153,5 @@ dom.changeOwner(context, "TestPM");  -->   change the owner
 System.out.println(dom.getVault());   ---> get the vault name
 
 dom.changeVault(context, "eService Sample");   ----> change the vault name
+
+Hashtable ht=dom.getBusinessObjectData(context,getstate);
