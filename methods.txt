@@ -157,3 +157,5 @@ dom.changeVault(context, "eService Sample");   ----> change the vault name
 Hashtable ht=dom.getBusinessObjectData(context,getstate);
 
 resultSelects.add("current.access[read]");  ----> returns true or false check access to businessobject
+
+StrName = EnoviaResourceBundle.getProperty(context, "emxFrameworkStringResource", new Locale(strLang), "emxFramework.ClipBoardCollection.NameLabel");  ---> to access the label name from string resource
