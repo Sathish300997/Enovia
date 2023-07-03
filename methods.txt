@@ -8,6 +8,9 @@ System.out.println(d.getHistory(context));	  - list the history
 
 System.out.println(d.getId());   
 
+
+
+StringList s=new StringList();
 System.out.println(d.getInfo(context, s));	- get the business object information
 
 RelationshipType r=new RelationshipType("IZICourseRel");   ----> get the relationship attribute
