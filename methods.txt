@@ -155,3 +155,5 @@ System.out.println(dom.getVault());   ---> get the vault name
 dom.changeVault(context, "eService Sample");   ----> change the vault name
 
 Hashtable ht=dom.getBusinessObjectData(context,getstate);
+
+resultSelects.add("current.access[read]");  ----> returns true or false check access to businessobject
