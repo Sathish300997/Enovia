@@ -164,3 +164,115 @@ resultSelects.add("current.access[read]");  ----> returns true or false check ac
 StrName = EnoviaResourceBundle.getProperty(context, "emxFrameworkStringResource", new Locale(strLang), "emxFramework.ClipBoardCollection.NameLabel");  ---> to access the label name from string resource
 
 BusinessObject    text    = dobj.getLastRevision(context); --> it returns the latest revision business object(TNR)
+
+String defaultProj=PersonUtil.getDefaultProject(context, context.getUser()); -->it returns the collabrative space of user
+---------------------------------------------------------------------------------------------------------------------------------------
+
+                         The below code returns all latest revision object of a given type
+                         ------------------------------------------------------------------
+
+package busObjDetails;
+
+ 
+
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+
+ 
+
+import com.exalead.enovia.api.container.Type;
+import com.matrixone.apps.domain.DomainConstants;
+import com.matrixone.apps.domain.DomainObject;
+import com.matrixone.apps.domain.DomainRelationship;
+import com.matrixone.apps.domain.util.EnoviaResourceBundle;
+import com.matrixone.apps.domain.util.MapList;
+import com.matrixone.apps.domain.util.PersonUtil;
+import com.matrixone.apps.effectivity.EffectivityFramework;
+import com.matrixone.json.JSONArray;
+import com.matrixone.json.JSONObject;
+
+ 
+
+import matrix.db.BusinessObject;
+import matrix.db.Context;
+import matrix.util.StringList;
+
+ 
+
+public class verifyFormData {
+
+
+    public static void main(String[] args) throws Exception {
+        Context context=new Context("","");
+        context.setUser("admin_platform");
+    context.setPassword("EnoviaV6");
+        // String id="48088.47334.54136.29180"; // it contains files
+        // String id="48088.47334.21208.32685";
+        // String id="48088.47334.39728.21158";
+    //String id="48088.47334.12464.6678";
+
+ 
+
+        String sss="Course-010";  //Course-002
+        String sWhere = "";
+        StringList s=new StringList();
+        s.add("name");
+        s.add("id");
+        MapList objectList=DomainObject.findObjects(context, "IZICourse","*",sWhere, s);
+
+        StringList lastRev1=new StringList();
+        DomainObject object = null ;
+
+        if (objectList != null && objectList.size() > 0) {
+            int objectListSize = objectList.size();
+            for (int i = 0; i < objectListSize; i++) {
+                 Map dataMap = (Map) objectList.get(i);
+                 String objectId = (String) dataMap.get("id");
+                 String objectName = (String) dataMap.get("name");
+                  object = new DomainObject(objectId);
+                 String lastRev=object.getLastRevision(context).getObjectId(context);
+                   lastRev1.add(lastRev);
+
+               }
+
+              }
+
+        Set uniqueElements = new HashSet();
+
+        StringList objSelect = new StringList();
+        objSelect.addElement(DomainConstants.SELECT_ID);
+        objSelect.addElement(DomainConstants.SELECT_NAME);
+        objSelect.addElement(DomainConstants.SELECT_REVISION);
+        objSelect.addElement(DomainConstants.SELECT_POLICY);
+        objSelect.addElement(DomainConstants.SELECT_CURRENT);
+        objSelect.addElement(DomainConstants.SELECT_OWNER);
+        objSelect.addElement(DomainConstants.SELECT_ORIGINATED);
+        objSelect.addElement(DomainConstants.SELECT_DESCRIPTION);
+
+
+        for (String element : lastRev1) {
+            uniqueElements.add(element);
+           Map ret= object.getInfo(context, objSelect);
+       }
+
+        for (Object element1 : uniqueElements) {
+            DomainObject doobj=new DomainObject( (String) element1);
+
+           Map ret= doobj.getInfo(context, objSelect);
+           System.out.println(ret);
+
+        }
+
+
+
+
+
+
+
+
+ 
+
+    }
+      }
