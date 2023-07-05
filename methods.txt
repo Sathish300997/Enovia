@@ -166,6 +166,14 @@ StrName = EnoviaResourceBundle.getProperty(context, "emxFrameworkStringResource"
 BusinessObject    text    = dobj.getLastRevision(context); --> it returns the latest revision business object(TNR)
 
 String defaultProj=PersonUtil.getDefaultProject(context, context.getUser()); -->it returns the collabrative space of user
+
+
+StringList busSelects = new StringList(2);
+         busSelects.add("format.file.size");
+         busSelects.add("format.file.name");
+         Map objMap=object.getInfo(context, busSelects);
+         StringList fileName = (StringList) objMap.get("format.file.name");
+         StringList fileSize = (StringList) objMap.get("format.file.size");  --->it returns the file size and name of checkin object
 ---------------------------------------------------------------------------------------------------------------------------------------
 
                          The below code returns all latest revision objectid of a given type
@@ -264,16 +272,6 @@ public class verifyFormData {
            System.out.println(ret);
 
         }
-
-
-
-
-
-
-
-
- 
-
     }
       }
 
