@@ -168,7 +168,7 @@ BusinessObject    text    = dobj.getLastRevision(context); --> it returns the la
 String defaultProj=PersonUtil.getDefaultProject(context, context.getUser()); -->it returns the collabrative space of user
 ---------------------------------------------------------------------------------------------------------------------------------------
 
-                         The below code returns all latest revision object of a given type
+                         The below code returns all latest revision objectid of a given type
                          ------------------------------------------------------------------
 
 package busObjDetails;
