@@ -276,3 +276,11 @@ public class verifyFormData {
 
     }
       }
+
+-----------------------------------------------------------------
+
+
+FileList ss=object.getFiles(context); ---> it returns the total checkin files available in the business object.
+StringList slFileName = object.getInfoList(context,"format.file.name"); --->it returns the filename with StringList as a return type
+
+
