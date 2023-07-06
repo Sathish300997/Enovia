@@ -283,4 +283,6 @@ StringList slFileName = object.getInfoList(context,"format.file.name"); --->it r
 
 System.out.println(object.getPreviousRevision(context));--->this method returns the previous revision of the object.
 
+  System.out.println(stringNumber.getClass().getSimpleName()); ----->this statement returns the datatype of a varaible
+
 
