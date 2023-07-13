@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <form id="myForm" >
+        <input type="text" id="name" name="name" placeholder="Name">
+        <input type="email" id="email" name="email" placeholder="Email">
+        <input type="password" id="password" name="password" placeholder="Password">
+        <input type="text" id="age" name="age" placeholder="Age">
+        <input type="text" id="address" name="address" placeholder="Address">
+        <!-- <input type="submit" id="sendData" value="submit" onclick="formToJSON()"> -->
+        <button id="sendData">send data</button>
+        //<div id="dataContainer"></div>
+      </form>
+</body>
+</html>
+<script>
+
+
+$("#sendData").click(function() {
+
+
+var formData = $("#myForm").serializeArray();
+console.log(formData);
+
+var data = {};
+
+for (var i = 0; i < formData.length; i++) {
+  data[formData[i].name] = formData[i].value;
+}
+console.log(data);
+let a=JSON.stringify(data)
+alert(a);
+document.write(a);
+
+
+  $.ajax({
+    type: "POST",
+    url: "/data",
+    data: a,
+    contentType: "application/json",
+    success: function() {
+      console.log("Data sent successfully");
+      document.write("success");
+    }
+  });
+});
+</script>
