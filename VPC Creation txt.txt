@@ -1,0 +1,26 @@
+Steps involved in vpc creation:
+ 
+ 
+    1.  create a own VPC.
+	
+	2.create a public and private subnet for different available zone by assingning different CIDR blocks.
+	
+	3.create a internet gateway and attach it to vpc.
+	
+	4.create routing table one as public and one as private by associating the appropriate subnets to it.
+
+    5.Edit the public route table, route alone and map the IGW, not the private and leave it as it is.
+
+    6.create two security groups- one for public (Edit the inbound rules with RDP, HTTP/HTTPS,SSH and map 0.0.0.0/0 in the source) and one for private (Edit the inbound rules and map the sg of public in the source)
+
+    7.create two EC2 one in public and one in private subnets with proper security groups.
+
+    8. Login into public and check the internet connection.
+
+    9.create a NAT gateway with new ElasticIP for the internet connection in the private subnet.map it to private RT.
+
+    10. Now login into the private EC2 and verify the connectivity and internet facility.	
+	
+	
+	
+  Administrator            44.201.52.28             i?qm&NjQ9F=PnuDMJlUfYLr9YAQvW@vS      44.201.52.28
