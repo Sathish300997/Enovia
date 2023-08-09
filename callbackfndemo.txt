@@ -1,0 +1,22 @@
+
+<script>
+function f(num1,num2,call)
+{
+    var result=num1+num2;
+    console.log("world")
+    call()
+    console.log("hello")
+}
+function sr(r)
+{
+   // console.log(r)
+    var a;  
+  
+a = setTimeout(fun, 8000);  
+  
+function fun() {  
+alert(" Welcome to the javaTpoint.com ");  
+}  
+}
+f(10,20,sr);
+    </script>
