@@ -1,0 +1,40 @@
+
+          Array spread operator
+const a=[1,2,3]
+console.log(a)  //1,2,3
+const b=[4,5,6]
+const c=[...a,9,...b] 
+console.log(c)  //1,2,3,4,5,6
+// -------------------------------------------
+           Object spread operator
+name={
+    id:1,
+    age:27
+}
+
+name2={
+    college:"PEC",
+    degree:"mechanical"
+}
+name3={...name,...name2}
+console.log(name3)
+// --------------------------------------------------
+           String spread operator
+var val="sathish"
+val1=[...val]
+console.log(val1)
+
+// --------------------------------------------------
+               Rest Operator
+function train(...dummy)
+{
+   console.log(dummy)
+}
+input=[1,2,3,4,5,0]
+train(...input)
+train(7,8)
+// ----------------------------------------------------
+//pre defined method example of spread operator
+vat=[1,2,3,4,5,9,8]
+const vas=Math.max(...vat)
+console.log(vas)
