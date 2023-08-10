@@ -1,0 +1,88 @@
+
+
+                                                     POJO CLass
+
+public class Person {
+private String name;
+private int age;
+public String getName() {
+    return name;
+}
+public void setName(String name) {
+    this.name = name;
+}
+public int getAge() {
+    return age;
+}
+public void setAge(int age) {
+    this.age = age;
+}
+public Person(String name, int age) {
+    super();
+    this.name = name;
+    this.age = age;
+}
+@Override
+public String toString() {
+    return "Person [name=" + name + ", age=" + age + "]";
+}
+}
+
+
+                                                    Sort the above class object by -- age,name
+													----------------------------------------
+													
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+ 
+
+import com.itextpdf.text.log.SysoLogger;
+
+ 
+
+public class main {
+
+ 
+
+    public static void main(String[] args) {
+        List<Person>ob=new ArrayList();
+        ob.add(new Person("virat",30));
+        ob.add(new Person("sachin",37));
+        ob.add(new Person("sehwag",32));
+        ob.add(new Person("yuvaraj",35));
+        Comparator<Person> c=new Comparator<Person>()
+                {
+
+
+ 
+
+                    
+
+ 
+
+                    @Override
+                    public int compare(Person o1, Person o2) {
+                        // TODO Auto-generated method stub
+//                        return Integer.compare(o1.getAge(), o2.getAge());
+                        return o1.getName().compareTo(o2.getName());
+                    }
+
+                };
+                Collections.sort(ob,c);
+
+                for(Person p:ob)
+                {
+                    System.out.println(p);
+                }
+
+ 
+
+    }
+
+ 
+
+}
