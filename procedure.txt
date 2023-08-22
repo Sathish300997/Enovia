@@ -21,3 +21,6 @@ begin
 						
 select * from user_name1 as un1                                  two tables- user_name1,roles
 inner join roles as r on r.role_id=un1.id ;
+
+
+SELECT datname FROM pg_database;  -->show databases in mysql
