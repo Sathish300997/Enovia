@@ -1,0 +1,23 @@
+                                     procedure creation in postgresql
+ 
+create procedure proc_name2(
+role_n varchar(277)
+)
+language plpgsql    
+as $$
+
+begin
+ update roles 
+    set role_name = role_n
+    where role_id = 1;
+	commit;
+	end;$$
+	
+	
+	call proc_name2('gurn');
+	
+	
+	                                inner join in postgresql
+						
+select * from user_name1 as un1                                  two tables- user_name1,roles
+inner join roles as r on r.role_id=un1.id ;
