@@ -1,0 +1,36 @@
+                                                 export module
+												 --------------
+
+		
+                                     1.1)  one js file(definition area)
+exports.add=function(x,y)
+{
+    return x+y;
+}
+
+exports.sub=function(x,y)
+{
+    return x-y;
+}
+
+                                      1.2)   calling area
+										
+										
+var cal=require('./First')
+
+var x=10;
+var y=5;
+console.log(cal.sub(x,y))
+ 
+
+                                                 server creation
+												 ---------------
+
+												 var http=require('http')
+
+http.createServer(function(req,res)
+{
+    res.writeHead(200,{'Content-Type':'text/html'})
+    res.write("welcome")
+    res.end()
+}).listen(8000)
