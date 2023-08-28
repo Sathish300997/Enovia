@@ -84,6 +84,10 @@
 	   int a[]={2,2};
   long b=  Arrays.stream(a).mapToLong(x->(x*x)).sum();  ---> it returns the square of given number and sum
     System.out.println(b);
+
+Note:
+For Collection Object we must mention Generic. For Example: ArrayList<Integer> sb=new ArrayList<Integer>();
+If you not mention Generic means.It throws an error.
 ------------------------------------------------------------------------------------------------------------------------
 	
 	                                                            Intermediate Operation -> it produce one stream
