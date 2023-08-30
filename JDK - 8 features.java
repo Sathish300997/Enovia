@@ -152,4 +152,30 @@ List l=new ArrayList();
 Object val=   l.stream().collect(Collectors.toList());
 System.out.println(val);
 ----------------------------------------------------------------------------------------------------------------
+        Given the user input for count of random number we generate between two digits using stream api
+
+
+	/* Online Java Compiler and Editor */
+import java.util.*;
+public class HelloWorld{
+
+     public static void main(String []args){
+        System.out.println("Enter the count of random number you want");
+        Scanner sc=new Scanner(System.in);
+        int n= sc.nextInt();
+        Random rb=new Random();
+        rb.ints(10,99).limit(n).forEach(System.out::println);
+     }
+}
+	output:
+
+	Enter the count of random number you want
+5
+
 	
+79
+53
+71
+36
+66
+----------------------------------------------------------------------------------------------------------------------------
