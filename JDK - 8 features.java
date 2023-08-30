@@ -187,3 +187,16 @@ public class HelloWorld{
 
 output:
          5,10
+
+---------------------------------------------------------------------------------------------------------------------------------
+input: [[1,2,3],[4,5,6],[7,8,9]]
+Output: [1,2,3,4,5,6,7,8,9]
+
+List<List<Integer>> listOfLists = Arrays.asList(
+	            Arrays.asList(1, 2, 3),
+	            Arrays.asList(4, 5, 6),
+	            Arrays.asList(7, 8, 9)
+	        );
+	        System.out.println(listOfLists);
+	        List singlelist = listOfLists.stream().flatMap((ls)->ls.stream()).collect(Collectors.toList());
+	        System.out.println(singlelist);
