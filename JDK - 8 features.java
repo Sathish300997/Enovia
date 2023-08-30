@@ -179,3 +179,11 @@ public class HelloWorld{
 36
 66
 ----------------------------------------------------------------------------------------------------------------------------
+         To print a duplicate number in a given arraylist using streams
+
+	List ls= Arrays.asList(1,2,3,4,5,5,10,10);
+       Set s =  (Set) ls.stream().filter((i)->Collections.frequency(ls,i)>1).collect(Collectors.toSet());
+       System.out.println(s);
+
+output:
+         5,10
