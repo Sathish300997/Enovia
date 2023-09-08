@@ -1,0 +1,101 @@
+
+
+these two appender object is responsible for publishing logging information to various preffered destinations such as a file,database,console,unix,syslog etc.
+
+a)RollingFileAppender
+b)DailyRollingFileAppender
+
+logger object - create a log
+appender object - publish a  log
+layout object - format the logging information
+
+log levels
+off - 0
+fatal - 100
+error - 200
+warn - 300
+info - 400
+debug - 500
+trace - 600
+
+
+implementations of logging in spring boot
+-----------------------------------------
+log4j.properties -- file name in resources
+----------------
+
+
+#Log4j configuration
+log4j.rootLogger=DEBUG,ROOT
+
+log4j.appender.FILE=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.FILE.Append = true
+log4j.appender.FILE.DatePattern = '.'yyy-MM-dd -------------------------------> //( This sets the date pattern for the daily rolling log file. 
+//The log file's name will include the current date in the format specified. 
+//For example, if today is September 8, 2023, the log file would be named "appname.log.2023-09-08".)                                    
+
+# Log file path
+log4j.appender.FILE.File=/apps/logs/appname.log
+
+log4j.appender.FILE.layout=org.apache.log4j.PatternLayout
+log4j.appender.FILE.layout.ConversionPattern=[%d] %t %c %L %-5p  - %m%n
+log4j.logger.org.springframework=WARN
+
+
+
+
+
+
+
+
+
+
+
+package com.okayjava.loggin.controller;
+
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class IndexController {
+
+	private static final Logger logger = Logger.getLogger(IndexController.class);  // create a logger object
+	
+	// instance initializer block
+	/*
+	 * { BasicConfigurator.configure(); }
+	 */
+	
+	@GetMapping("/")
+	public String index() {
+		
+		logger.debug("loading index page..");
+		logger.info("INFO level message!!");
+		logger.warn("WARN level message!!");
+		logger.error("ERROR level message !!");
+		logger.fatal("FATAL level message");
+		logger.trace("TRACE level message..");
+		
+		logger.debug("Exit of index().");
+		return "index";
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
