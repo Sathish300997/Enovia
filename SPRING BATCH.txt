@@ -1,0 +1,292 @@
+SPRING BATCH
+
+FIRST STEP:
+ create a entity class
+ ----------------------------------------------------------
+
+ package com.techprimers.springbatchexample1.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.util.Date;
+
+@Entity
+public class User {
+
+    @Id
+    private Integer id;
+    private String name;
+    private String dept;
+    private Integer salary;
+    private Date time;
+
+    public User(Integer id, String name, String dept, Integer salary, Date time) {
+        this.id = id;
+        this.name = name;
+        this.dept = dept;
+        this.salary = salary;
+        this.time = time;
+    }
+
+    public User() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDept() {
+        return dept;
+    }
+
+    public void setDept(String dept) {
+        this.dept = dept;
+    }
+
+    public Integer getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Integer salary) {
+        this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("User{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", dept='").append(dept).append('\'');
+        sb.append(", salary=").append(salary);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+}
+---------------------------------------------------------------------------------------------
+SECOND STEP:
+
+CREATE A SPRING BATCH CONFIGURATION CLASS  for creating a batch
+---------------------------------------------------------------
+
+package com.techprimers.springbatchexample1.config;
+
+import com.techprimers.springbatchexample1.model.User;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.LineMapper;
+import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
+import org.springframework.batch.item.file.mapping.DefaultLineMapper;
+import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.FileSystemResource;
+
+@Configuration
+@EnableBatchProcessing
+public class SpringBatchConfig {
+
+    @Bean
+    public Job job(JobBuilderFactory jobBuilderFactory,
+                   StepBuilderFactory stepBuilderFactory,
+                   ItemReader<User> itemReader,
+                   ItemProcessor<User, User> itemProcessor,
+                   ItemWriter<User> itemWriter
+    ) {
+
+        Step step = stepBuilderFactory.get("ETL-file-load")        
+                .<User, User>chunk(100)
+                .reader(itemReader)                              ------------>  create a step for job creation
+                .processor(itemProcessor)
+                .writer(itemWriter)
+                .build();
+
+
+        return jobBuilderFactory.get("ETL-Load")                  -----> creating a job from jobbuilderfactory
+                .incrementer(new RunIdIncrementer())
+                .start(step)
+                .build();
+    }
+
+    @Bean
+    public FlatFileItemReader<User> itemReader() {
+
+        FlatFileItemReader<User> flatFileItemReader = new FlatFileItemReader<>();
+        flatFileItemReader.setResource(new FileSystemResource("src/main/resources/users.csv"));         ----> item reader is for read the excel data.inside the item reader we can use linemapper for map the excel data into entity datatypes
+        flatFileItemReader.setName("CSV-Reader");
+        flatFileItemReader.setLinesToSkip(1);
+        flatFileItemReader.setLineMapper(lineMapper());
+        return flatFileItemReader;
+    }
+
+    @Bean
+    public LineMapper<User> lineMapper() {
+
+        DefaultLineMapper<User> defaultLineMapper = new DefaultLineMapper<>();
+        DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();   // DelimitedLineTokenizer class is used for process the csv file based on our conditions(,)
+
+        lineTokenizer.setDelimiter(",");
+        lineTokenizer.setStrict(false);
+        lineTokenizer.setNames("id", "name", "dept", "salary");
+
+        BeanWrapperFieldSetMapper<User> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
+        fieldSetMapper.setTargetType(User.class);
+
+        defaultLineMapper.setLineTokenizer(lineTokenizer);// add the linetokenizer object into the linemapper class
+        defaultLineMapper.setFieldSetMapper(fieldSetMapper); // add the fieldset mapper object into the linemapper 
+
+        return defaultLineMapper;
+    }
+
+}
+
+-------------------------------------------------------------------------------------------------------------------------------
+THIRD STEP:
+
+ITEMPROCESS - PROCESS THE CSV FILE 
+
+
+
+@Component
+public class Processor implements ItemProcessor<User, User> {
+
+    private static final Map<String, String> DEPT_NAMES =
+            new HashMap<>();
+
+    public Processor() {
+        DEPT_NAMES.put("001", "Technology");
+        DEPT_NAMES.put("002", "Operations");
+        DEPT_NAMES.put("003", "Accounts");
+    }
+
+    @Override
+    public User process(User user) throws Exception {
+        String deptCode = user.getDept();
+        String dept = DEPT_NAMES.get(deptCode);
+        user.setDept(dept);
+        user.setTime(new Date());
+        System.out.println(String.format("Converted from [%s] to [%s]", deptCode, dept));
+        return user;
+    }
+}
+------------------------------------------------------------------------------------------
+FOURTH STEP:
+
+WRITE THE DATA INTO THE DATABASE
+
+package com.techprimers.springbatchexample1.batch;
+
+import com.techprimers.springbatchexample1.model.User;
+import com.techprimers.springbatchexample1.repository.UserRepository;
+import org.springframework.batch.item.ItemWriter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component
+public class DBWriter implements ItemWriter<User> {
+
+    private UserRepository userRepository;
+
+    @Autowired
+    public DBWriter (UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public void write(List<? extends User> users) throws Exception{
+        System.out.println("Data Saved for Users: " + users);
+        userRepository.saveAll(users);
+    }
+}
+------------------------------------------------------------------------------------------------
+
+FIFTH STEP  --- FOR RUN THE BATCH 
+
+package com.techprimers.springbatchexample1.controller;
+
+import org.springframework.batch.core.*;
+import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
+import org.springframework.batch.core.repository.JobRestartException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/load")
+public class LoadController {
+
+    @Autowired
+    JobLauncher jobLauncher;  // RUN THE JOB
+
+    @Autowired
+    Job job;
+
+    @GetMapping
+    public BatchStatus load() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+
+
+        Map<String, JobParameter> maps = new HashMap<>();
+        maps.put("time", new JobParameter(System.currentTimeMillis()));
+        JobParameters parameters = new JobParameters(maps);
+        JobExecution jobExecution = jobLauncher.run(job, parameters);
+
+        System.out.println("JobExecution: " + jobExecution.getStatus());
+
+        System.out.println("Batch is Running...");
+        while (jobExecution.isRunning()) {
+            System.out.println("...");
+        }
+
+        return jobExecution.getStatus();
+    }
+}
+-----------------------------------------------------------------
+APPLICTION.PROPERTIES
+
+server.port=8089
+
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=password
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+
+spring.h2.console.enabled=true
+
+spring.batch.job.enabled=false
+
