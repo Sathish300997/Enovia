@@ -43,9 +43,13 @@ stl.add("name");
 stl.add("id");
 
 DomainObject dom1= new DomainObject(oid);
-//System.out.println(dom1.findObjects(context, "IZ*", "*", "", stl));
+//System.out.println(dom1.findObjects(context, "IZ*", "*", "", stl));   ---(context,type,DomainConstants.QUERY_WILDCARD,where condition,string list)
 
+------------------------------------------------------------------------------------------------------------------------
+StringList s=new StringList("relationship");                    
+            Hashtable ss= d.getBusinessObjectData(context, s);         ----------------------- this step retruns relationship name of the given business object
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //@SuppressWarnings("deprecation")
 MapList objList = dom1.getRelatedObjects( context,
 		"*",       //relationship
