@@ -51,9 +51,9 @@ MapList objList = dom1.getRelatedObjects( context,
 		"*",       //relationship
         "*",       // type
         stl,       // string list
-        null,      
-        false,     // to rel
-        true,      // from rel
+        null,                                                 --------------------------->this method returns connected objects from and to depending on the condition
+        false,     // to rel                             --------------- if to rel gives true means it returns to related connected objects
+        true,      // from rel            --------- if from rel gives true means it returns from related connected objects
         (short)1,  // level
         "",
         null);
