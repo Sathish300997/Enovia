@@ -161,6 +161,14 @@ sb.stream().distinct().forEach(x->System.out.println(x));
   long b=  Arrays.stream(a).mapToLong(x->(x*x)).sum();  ---> it returns the square of given number and sum
     System.out.println(b);
 
+                                (or)
+
+ArrayList<Integer>sb=new ArrayList<Integer>();
+sb.add(1);
+//sb.add(1);
+long val1=sb.stream().mapToLong(x->(x*x)).sum();
+System.out.println(val1);
+
 Note:
 For Collection Object we must mention Generic. For Example: ArrayList<Integer> sb=new ArrayList<Integer>();
 If you not mention Generic means.It throws an error.
