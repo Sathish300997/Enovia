@@ -121,6 +121,13 @@ System.out.println(max);
 -------------------------------------------------------------------------------------------------------------------------	
 10)	   int a[]={100,56,37,10,100,10};
       Arrays.stream(a).distinct().forEach(x->System.out.println(x));  ---->it remove the duplicate value
+
+	      (or)
+
+ArrayList<Integer>sb=new ArrayList<Integer>();
+sb.add(10);
+sb.add(10);
+sb.stream().distinct().forEach(x->System.out.println(x));
 ----------------------------------------------------------------------------------------------------------------------	  
 	  
 11)	  stream is divided into two types:
