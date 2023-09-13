@@ -75,7 +75,14 @@ OptionalDouble val=sb.stream().mapToInt(Integer::intValue).average();
 	
 6)	 int a[]={100,56,37,10};
        Arrays.stream(a).filter(x->x%2==0).forEach(x->System.out.println(x));   -->for filtering the logic
-	   
+
+	           (or)
+ ArrayList<Integer> sb=new ArrayList();
+ sb.add(10);
+ sb.add(11);
+ sb.add(12);
+ sb.add(13);
+ sb.stream().filter(x->x%2==0).forEach(y->System.out.println(y));
 --------------------------------------------------------------------------------------------------------------	   
 7)	      int a[]={100,56,37,10};
     int min=   Arrays.stream(a).min().getAsInt();   ---->return the min value of an array
