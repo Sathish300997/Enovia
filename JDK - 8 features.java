@@ -46,7 +46,17 @@
 4)	 int a[]={100,50,30,10}; 
      int val=  Arrays.stream(a).sum();          --->returns the sum of array
     System.out.println(val);
-	
+	                          (or)
+
+ArrayList<Integer>sb=new ArrayList<Integer>();
+sb.add(1);
+sb.add(2);
+sb.add(3);
+sb.add(1);
+int sum = sb.stream()
+            .mapToInt(Integer::intValue)           -----------> convert the Integer object into primitive and sum
+            .sum();
+  System.out.println(sum);
 -------------------------------------------------------------------------------------------------------	
 5)	   int a[]={100,50,30,10};
      OptionalDouble val=  Arrays.stream(a).average(); -->return the average of array
