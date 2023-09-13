@@ -99,8 +99,16 @@ Optional<Integer> min = sb.stream().min(Comparator.naturalOrder());
 System.out.println(min);
 ---------------------------------------------------------------------------------------------------------------------	
 8)	      int a[]={100,56,37,10};
-    int min=   Arrays.stream(a).max().getAsInt();   ---->return the max value of an array
+    int min=   Arrays.stream(a).max().getAsInt(); (or)   OptionalInt min=Arrays.stream(a).max();  ---->return the max value of an array
     System.out.println(min);
+
+                                        (or)
+
+ArrayList<Integer>sb=new ArrayList<Integer>();
+sb.add(10);
+sb.add(20);
+Optional<Integer> max= sb.stream().max(Comparator.naturalOrder());
+System.out.println(max);
 ----------------------------------------------------------------------------------------------------------------------
 9)	 List<Integer> l=new ArrayList();
         l.add(1);
