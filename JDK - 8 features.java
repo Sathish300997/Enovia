@@ -87,7 +87,16 @@ OptionalDouble val=sb.stream().mapToInt(Integer::intValue).average();
 7)	      int a[]={100,56,37,10};
     int min=   Arrays.stream(a).min().getAsInt();   or    OptionalInt min= Arrays.stream(a).min();  ---->return the min value of an array
     System.out.println(min);
-	
+
+                                                   (or)
+	ArrayList<Integer> sb=new ArrayList();
+sb.add(1);
+sb.add(2);
+sb.add(3);
+sb.add(4);
+
+Optional<Integer> min = sb.stream().min(Comparator.naturalOrder());
+System.out.println(min);
 ---------------------------------------------------------------------------------------------------------------------	
 8)	      int a[]={100,56,37,10};
     int min=   Arrays.stream(a).max().getAsInt();   ---->return the max value of an array
