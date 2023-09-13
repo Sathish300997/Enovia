@@ -165,6 +165,7 @@ sb.stream().distinct().forEach(x->System.out.println(x));
 
 ArrayList<Integer>sb=new ArrayList<Integer>();
 sb.add(1);
+sb.add(2);
 //sb.add(1);
 long val1=sb.stream().mapToLong(x->(x*x)).sum();
 System.out.println(val1);
