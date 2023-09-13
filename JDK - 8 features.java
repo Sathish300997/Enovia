@@ -61,7 +61,16 @@ int sum = sb.stream()
 5)	   int a[]={100,50,30,10};
      OptionalDouble val=  Arrays.stream(a).average(); -->return the average of array
     System.out.println(val);
-	
+	                         (or)
+
+ArrayList<Integer> sb=new ArrayList();
+sb.add(1);
+sb.add(1);
+sb.add(1);
+sb.add(1);
+
+OptionalDouble val=sb.stream().mapToInt(Integer::intValue).average();
+ System.out.println(val);
 ---------------------------------------------------------------------------------------------------------------
 	
 6)	 int a[]={100,56,37,10};
