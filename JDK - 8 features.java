@@ -1,20 +1,46 @@
 
  1) int a[]={1,3,4};
      long count=   Arrays.stream(a).count();  --->returns the length of an array
+                                (or)
+           
+	     ArrayList<Integer>sb=new ArrayList<Integer>();
+    sb.add(1);
+    sb.add(2);
+    sb.add(3);
+   long c= sb.stream().count();
+   System.out.println(c);
 -------------------------------------------------------------------------------------------	 
 	 
 2)	 int a[]={100,50,30,10};
        Arrays.stream(a).sorted().forEach((x)->{           -->for ascending order sorting
           System.out.println(x);
      });
+                                (or)
+
+
+  ArrayList<Integer>sb=new ArrayList();
+    sb.add(4);
+     sb.add(3);
+      sb.add(2);
+       sb.add(1);
+    sb.stream().sorted().forEach(x->System.out.println(x));
 -----------------------------------------------------------------------------------------------	 
 	 
 3)	  int a[]={100,50,30,10};
        Arrays.stream(a).boxed().sorted(Comparator.reverseOrder()).forEach((x)->{
-          System.out.println(x);                                                         -->for descending order sorting
+          System.out.println(x);                                                         -->for descending order.we convert the int datatype into Integer using boxed() method.
      });                                                                                     
 	 
 	In collections object use Collections.reverseOrder()
+                                              (or)
+
+		   ArrayList<Integer>sb=new ArrayList();
+    sb.add(4);
+     sb.add(3);
+      sb.add(2);
+      sb.add(1);
+   
+    sb.stream().sorted(Comparator.reverseOrder()).forEach(x->System.out.println(x));
 ----------------------------------------------------------------------------------------------------	
 	
 4)	 int a[]={100,50,30,10}; 
