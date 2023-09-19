@@ -1,0 +1,90 @@
+
+
+
+Step 1:create a POJO class
+
+public class Person {
+private int id;
+private String name;
+public Person(int id, String name, int age) {
+	super();
+	this.id = id;
+	this.name = name;
+	this.age = age;
+}
+public int getId() {
+	return id;
+}
+public void setId(int id) {
+	this.id = id;
+}
+public String getName() {
+	return name;
+}
+public void setName(String name) {
+	this.name = name;
+}
+public int getAge() {
+	return age;
+}
+public void setAge(int age) {
+	this.age = age;
+}
+private int age;
+} 
+
+step 2:
+
+create a object for that class :
+----------------------------------
+
+Person obj=new Person(1,"sathish",22);
+Person obj1=new Person(2,"ruvith",20);
+
+step 3:
+
+convert this java object into JsonObject :
+-----------------------------------------
+
+  // Create a JSONObject for the first Person
+        JSONObject jsonObject1 = new JSONObject(obj);
+
+ 
+
+        // Create a JSONObject for the second Person
+        JSONObject jsonObject2 = new JSONObject(obj1);
+
+Step 4:
+
+create a JsonArray and add individual JSONObject into an JsonArray :
+-------------------------------------------------------------------
+
+  JSONArray jsonArray = new JSONArray();
+  
+  jsonArray.put(jsonObject1);
+  jsonArray.put(jsonObject2);
+  
+  System.out.println(jsonArray);
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Step 5:
+  convert this jsonarray object into Java object:
+  -----------------------------------------------
+  
+    for(int i=0;i<jsonArray.length();i++) {
+
+        JSONObject firstJsonObject = jsonArray.getJSONObject(i);
+        Person convertedObj = new Person(
+            firstJsonObject.getInt("id"),
+            firstJsonObject.getString("name"),
+            firstJsonObject.getInt("age")
+        );
+
+        System.out.println(convertedObj.getName());
+        }
+----------------------------------------------------------------------------------------------------------------------------------
+ 
+
+
+
+
+
