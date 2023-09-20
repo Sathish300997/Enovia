@@ -1,3 +1,6 @@
+TO PREVENT COPY PASTE A CONTENT INSIDE THE TEXT BOX
+----------------------------------------------------
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,3 +13,23 @@
     <input type="text" id="noCopyPasteInput" onpaste="return false;">
 </body>
 </html>
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+TO PREVENT A SENTENCE FOR COPY
+------------------------------
+
+<body>
+    <div id="no-copy" oncopy="return false;">
+        This content cannot be copied.
+    </div>
+    <h1>Test</h1>
+
+    <script>
+       // Disable the context menu to prevent right-click copying
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
