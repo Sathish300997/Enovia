@@ -1,0 +1,4 @@
+
+https://docs.oracle.com/javase/8/docs/api/  -- standard edition
+
+Overview (Java(TM) EE 7 Specification APIs) (oracle.com)  -- enterprise edition
