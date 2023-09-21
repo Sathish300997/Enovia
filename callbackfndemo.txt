@@ -110,3 +110,27 @@ success
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                                                                                           react js
+
+
+import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
+
+export default function Sample() {
+    const [initial, setinitial] = useState({});
+    useEffect(() => {
+        fetch('https://jsonplaceholder.typicode.com/todos/')
+        .then(response => response.json())
+        .then(json => setinitial(json))
+    }, []);
+  return (
+    <div>
+      {/* {JSON.stringify(initial)} */}
+      {JSON.stringify(initial)}
+    </div>
+  );
+}
+
+
