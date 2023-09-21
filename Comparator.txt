@@ -86,3 +86,10 @@ public class main {
  
 
 }
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+if you want to document the above code use the following steps:
+1)create a class with .java file name
+2)choose the location directory of java file in command prompt
+3) run the command javadoc filename.java
