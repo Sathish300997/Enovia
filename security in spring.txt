@@ -1,0 +1,28 @@
+Security:
+1)session token
+2)JWT token
+
+Session token:
+     *statefull
+	 *stores information in server side
+	 *suitable for monolithic application
+	 
+JWT token:
+     *stateless
+	 *stores information in client side
+	 *suitable for multi instance and microservice
+
+
+JWT Structure:(xxxx.yyyy.zzzz) - (Header,payload,signature)
+
+     *Header
+	 *Payload
+	 *Signature
+	 
+decode the structure using -- https://jwt.io/  --- this website.
+
+Example:
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c  ---> Base 64 decoder
+
+(Header)                            .     (payload)                                                             .  (signature)
