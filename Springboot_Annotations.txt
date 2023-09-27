@@ -1,0 +1,87 @@
+Spring Boot annotations:
+
+1)@Rest controller
+
+2)@Request mapping
+
+3)@Get mapping
+
+4)@post mapping
+
+5)@Entity
+
+6)@Id
+
+7)@GeneratedValue(strategy = GenerationType.AUTO)
+
+8)@Data
+
+9)@Getter
+
+10)@Setter
+
+11)@NoArgsConstructor
+
+12)@AllArgsConstructor
+
+13)@RequestBody      ------  the employee JSON object is converted into a Java employee object using @RequestBody annotation.
+
+
+14)@ResponseBody     ------   The @ResponseBody annotation tells a controller that the object returned is automatically serialized into JSON and passed back into the HttpResponse object.
+
+
+15)@Transactional    ------  @Transactional, which means that all database operations within this method will be part of a single transaction.
+
+The @Transactional annotation ensures that if any part of the transaction fails, the entire transaction is rolled back, maintaining data consistency.
+
+16)@RequestHeader(value = "authorization", defaultValue = "") String auth     ----------  In Spring Framework, the @RequestHeader annotation is used to retrieve values from the HTTP request headers.
+
+
+@RequestMapping(value = "/books/{id}")
+17) @PathVariable("id") Long bookId,      --------  The @PathVariable annotation is used to retrieve data from the URL path.
+By defining placeholders in the request mapping URL, you can bind those placeholders to method parameters annotated with @PathVariable
+
+18)@RequestParam    --- it is similar to path variable
+
+Diffenences:
+------------
+@PathVariable is often used for RESTful APIs to capture resource identifiers from the URL, such as fetching a specific item by its ID.
+
+@RequestParam is commonly used for search or filter operations where you want to provide additional parameters in the URL, like search queries with different criteria.
+
+19)@Autowired
+
+20)@JsonInclude(JsonInclude.Include.NON_NULL)
+
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+public class Person {
+    private String name;
+    private Integer age;
+    
+    // Constructors, getters, and setters
+    
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    // Similarly, you can annotate age or other properties
+}
+
+In this example, the @JsonInclude annotation is applied to the getName method with Include.NON_NULL. 
+This means that when serializing a Person object to JSON, the name property will only be included if it is not null.
+ If name is null, it won't appear in the JSON output.
+ 
+21)@JsonIgnore   ------ JsonIgnore indicates that the annotated method or field is to be ignored in POJO class
+
+22)@JsonFilter("SomeBeanFilter")    --------  It allows you to specify a filter name and then dynamically decide which properties to serialize based on that filter.
+
+23)@Lob  ---   LOBs are typically used to store large data objects in a database, such as text, binary data, or files
+
+24) 
