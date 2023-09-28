@@ -84,4 +84,213 @@ This means that when serializing a Person object to JSON, the name property will
 
 23)@Lob  ---   LOBs are typically used to store large data objects in a database, such as text, binary data, or files
 
-24) 
+24) @service
+
+25)@Repository
+
+26)@EnableAutoConfiguration      ----   For example, if you have added a database dependency, Spring Boot will configure data source beans automatically.
+
+27)@Configuration  -----   Here, @Configuration is used to define a configuration class with a @Bean method that creates and configures a data source bean explicitly.
+
+28)@RequestScope or @Scope("request")  ----  this ensures that only one request at a time can set their properties.
+
+29)@RestControllerAdvice , @ExceptionHandler  ----   is an annotation used in Spring Framework to define global exception handling for controllers. 
+It allows you to centralize your exception handling logic, making it easier to manage and maintain.
+@ExceptionHandler -- which will handle specific exceptions.
+
+30)@SortDefault(sort = "name", direction = Sort.Direction.ASC)    --- sort the data from repository class at your specific needs
+
+31)@column(name="description"),  @Column(length = 60)  --  make the properties of pojo class as a table column.
+
+32)@Type  --  It is used to define custom mappings between Java objects and database columns.
+
+Example :
+
+ @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime createdAt;                                              ---- Here custom datatype DateTime so we use @Type.
+	
+33) @JoinColumn(name = "author_id") // Specifies the foreign key column to a particular class.
+
+Example:
+
+@Entity
+public class Author {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+
+    // Other author properties, getters, and setters
+}
+
+@Entity
+public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String title;
+
+    @ManyToOne  // many books having one author.
+    @JoinColumn(name = "author_id") // Specifies the foreign key column
+    private Author author;
+
+    // Other book properties, getters, and setters
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+34) @OneToOne  //  This annotation is typically used to represent a situation where one instance of an entity is associated with only one instance of another entity.
+
+Example:(bidirectional flow)
+
+@Entity
+public class Person {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String name;
+    
+    // Other person properties, getters, and setters
+    
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    private Passport passport;
+    
+    // Getter and setter for passport
+}
+
+@Entity
+public class Passport {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String passportNumber;
+    
+    // Other passport properties, getters, and setters
+    
+    @OneToOne
+    @JoinColumn(name = "person_id") // Specifies the foreign key column
+    private Person person;
+    
+    // Getter and setter for person
+}
+Explanation:
+
+The Person and Passport classes are annotated with @Entity to indicate that they are JPA entities.
+The Person class has a @OneToOne relationship with the Passport class, and the Passport class has a @OneToOne relationship with the Person class. This establishes a bidirectional one-to-one relationship.
+The @JoinColumn annotation is used in the Passport class to specify the foreign key column person_id in the Passport table, which links to the Person entity.
+The mappedBy attribute in the Person class indicates that the passport field in the Person class is the owning side of the relationship.
+With this setup, you can create and retrieve Person and Passport entities while maintaining the one-to-one relationship between them in the database.
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+35)   @OneToMany(mappedBy = "author", cascade = CascadeType.ALL) and @ManyToOne
+
+Example:
+
+@Entity
+public class Author {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String name;
+    
+    // Other author properties, getters, and setters
+    
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private List<Book> books = new ArrayList<>();
+    
+    // Getter and setter for books
+}
+
+@Entity
+public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String title;
+    
+    // Other book properties, getters, and setters
+    
+    @ManyToOne
+    @JoinColumn(name = "author_id") // Specifies the foreign key column
+    private Author author;
+    
+    // Getter and setter for author
+}
+
+Explanation:
+
+The Author and Book classes are annotated with @Entity to indicate that they are JPA entities.
+The Author class has a @OneToMany relationship with the Book class, and the Book class has a @ManyToOne relationship with the Author class. This establishes a bidirectional one-to-many relationship.
+The mappedBy attribute in the Author class indicates that the books field in the Author class is the owning side of the relationship.
+The @JoinColumn annotation in the Book class specifies the foreign key column author_id in the Book table, which links to the Author entity.
+With this setup, you can create and retrieve Author and Book entities while maintaining the one-to-many relationship between them in the database.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+36)@ManyToMany
+
+Example:
+
+@Entity
+public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String name;
+    
+    // Other student properties, getters, and setters
+    
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "student_course",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private Set<Course> courses = new HashSet<>();
+    
+    // Getter and setter for courses
+}
+
+@Entity
+public class Course {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String title;
+    
+    // Other course properties, getters, and setters
+    
+    @ManyToMany(mappedBy = "courses")
+    private Set<Student> students = new HashSet<>();
+    
+    // Getter and setter for students
+}
+
+
+Explanation:
+
+In this code:
+
+The Student and Course classes are annotated with @Entity to indicate that they are JPA entities.
+The Student class has a @ManyToMany relationship with the Course class, and the Course class has a @ManyToMany relationship with the Student class. This establishes a bidirectional many-to-many relationship.
+The @JoinTable annotation in the Student class specifies the name of the join table (student_course) that stores the relationship between students and courses.
+The joinColumns and inverseJoinColumns attributes in the @JoinTable annotation define the foreign key columns in the join table.
+With this setup, you can create and retrieve Student and Course entities while maintaining the many-to-many relationship between them in the database.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+37)@Value("${my.property}")  -------  it is used to read the properties files(EX: Application.properties)
+
+38)@Order(Ordered.HIGHEST_PRECEDENCE)  ---- It ensures that the annotated component is among the first to be executed or initialized.
+
+39)@EnableWebSecurity   ----  that is used to enable web security within a Spring application
+
+40)@EnableBatchProcessing  ---  When you use @EnableBatchProcessing, Spring Boot automatically configures essential batch processing beans and infrastructure, such as JobRepository, JobLauncher, and JobExplorer. 
+This annotation simplifies the setup of batch processing in your application.
