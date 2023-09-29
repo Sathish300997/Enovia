@@ -295,4 +295,7 @@ With this setup, you can create and retrieve Student and Course entities while m
 40)@EnableBatchProcessing  ---  When you use @EnableBatchProcessing, Spring Boot automatically configures essential batch processing beans and infrastructure, such as JobRepository, JobLauncher, and JobExplorer. 
 This annotation simplifies the setup of batch processing in your application.
 
+41)@Endpoint  ---  The @Endpoint annotation is used to define the endpoint class. An endpoint class is responsible for processing incoming SOAP requests and generating responses.
+
+
 Spring Actuators - Spring Actuator is a cool feature of Spring Boot with the help of which you can see what is happening inside a running application
