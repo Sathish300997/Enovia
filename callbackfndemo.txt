@@ -133,4 +133,19 @@ export default function Sample() {
   );
 }
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Currying:
+
+Currying in JavaScript is a functional programming technique that transforms a function with multiple arguments into a sequence of functions, each taking a single argument. This enables you to partially apply arguments and create reusable, specialized functions
+
+Example:
+ function add(a){
+    return function (b){
+        return a+b
+    }
+}
+
+console.log(add(3)(5))
+Output:
+8
