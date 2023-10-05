@@ -1,0 +1,81 @@
+Spring Profiles:
+----------------
+
+default profiles - application.properties
+
+why we use spring profile:
+--------------------------
+1)In development server, we use mysql database whereas in production server we use postgresql means their datasources properties are different.
+so we can use spring profile, with different application.properties file
+
+Example:
+application-local.properties
+
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.url=jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+spring.datasource.username=sa
+spring.datasource.password=
+
+
+application-dev.properties
+
+
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/db
+spring.datasource.username=root
+spring.datasource.password=password
+
+
+application-prod.properties
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ Multiple Profiles in application.properties:
+ --------------------------------------------
+ It is also possible to specify all the profile specific configurations in only the application.properties file, using the spring.config.activate.on-profile property as the separator to indicate the profile.
+ 
+ Example:
+ 
+application.name=My Application
+
+#--- local profile ---#
+spring.config.activate.on-profile=local
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.url=jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+spring.datasource.username=sa
+spring.datasource.password=
+
+#--- dev profile ---#
+spring.config.activate.on-profile=dev
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/db
+spring.datasource.username=root
+spring.datasource.password=password
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Profile Groups:
+---------------
+
+ A profile group allows to group similar profiles together.
+ 
+ For example, if we have different profiles for production configurations such as prodJms, prodDatabase, prodJndi etc., and we want to activate all these profiles while deploying the application in the production.
+ To do so we can group all these profiles under a single profile name.
+ 
+ application.properties
+ ----------------------
+ spring.profiles.group.prod=prodJms,prodDatabase,prodJndi
+ 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Activating a Profile:
+---------------------
+
+You can activate a specific profile by setting the spring.profiles.active property in your application.properties.
+ (or) 
+by specifying it as a command-line argument when running your Spring Boot application
+
+Example:
+
+spring.profiles.active=dev
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
