@@ -299,3 +299,13 @@ This annotation simplifies the setup of batch processing in your application.
 
 
 Spring Actuators - Spring Actuator is a cool feature of Spring Boot with the help of which you can see what is happening inside a running application
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CascadeType.ALL  -- All operations(save,delete,update) from one Entity will affect the associated Entity.
+CascadeType.PERSIST  -- save operation from one Entity will affect the associated Entity.(other operations(delete,update) will not affect).
+CascadeType.MERGE  -- merge operation from one Entity will affect the associated Entity.
+CascadeType.REMOVE  -- remove operation from one Entity will affect the associated Entity.
+CascadeType.DETACH -- if entity is detached(not associated with session),then related entity will also be detached.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
