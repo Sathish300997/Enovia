@@ -1,0 +1,37 @@
+For JPO(return Maplist)
+
+MapList obj=[{type=IZcourse,name=12,id=123},{type=IZcourse,name=122,id=129},{}] - array contains map object
+
+Map obj={type=IZcourse,name=12,id=123};
+
+we can get id of the individual object means going for looping
+
+for(int i=0;i<obj.size();i++){
+
+Map ob=(Map)obj.get(i) //loop for each map object in the maplist
+String id=(String)ob.get("id");
+
+}
+
+for jpo unpack we can type cast Hashmap:
+-----------------------------------------
+HashMap programMap = (HashMap) JPO.unpackArgs(args);
+
+MapList objectList= (MapList) programMap.get("objectList");
+-------------------------------------------------------------------------------------------------------------
+
+Jsonobject and JsonArray( for webservices only) return jsonarray only
+
+JsonArray = [{"type":"IZcourse","name":"12","id":123},{"type":"IZcourse","name":"122","id":"129"},{}]
+
+Jsonobject = {"type":"IZcourse","name":"12","id":123}
+
+  MapList typeList=DomainObject.findObjects(context, type, "*","", s);
+         JSONArray oid = new JSONArray();
+         for (int count=0;count<typeList.size(); count++)
+	        {
+	         Map objInfo = (Map)typeList.get(count);
+	         objData = new JSONObject(objInfo);
+	         oid.put(objData.get("id"));
+	        // System.out.println("id"+oid);
+	         }
