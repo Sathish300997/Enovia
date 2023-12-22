@@ -1,0 +1,13 @@
+MQL<21>add bus Notification PolicyXVCNotesStateCreatePromoteEvent - policy "Business Rule" vault "eService Administration" "Static To List" "JPO xvcCPGNotificationUtil:getLabManager" "From Agent" ${USER} "Registered Suite" Framework "Body Text" xvcCPG.PolicyXVCNotesStateCreatePromoteEvent.Body.TEXT "Body HTML" xvcCPG.PolicyXVCNotesStateCreatePromoteEvent.Body.HTML "Subject Text" xvcCPG.PolicyXVCNotesStateCreatePromoteEvent.Subject;
+BusinessObject Notification PolicyXVCNotesStateCreatePromoteEvent - successfully added
+
+
+MQL<22>add bus "eService Trigger Program Parameters" PolicyXVCNotesStateCreatePromoteAction NotifyRequestor
+policy "eService Trigger Program Policy" vault "eService Administration" "eService Program Name" emxNotificationUtil "eService Method Name" objectNotification "eService Sequence Number" 1 "eService Program Argument 1" ${OBJECTID} "eService Program Argument 2" PolicyXVCNotesStateCreatePromoteEvent;
+BusinessObject eService Trigger Program Parameters PolicyXVCNotesStateCreatePromoteAction NotifyRequestor successfully added
+
+MQL<23>mod bus Notification PolicyXVCNotesStateCreatePromoteEvent - Attachments $<id>;
+BusinessObject Notification PolicyXVCNotesStateCreatePromoteEvent - successfully modified
+
+promote bus Notification PolicyXVCNotesStateCreatePromoteEvent -;
+promote bus "eService Trigger Program Parameters" PolicyXVCNotesStateCreatePromoteAction NotifyRequestor;
