@@ -289,4 +289,6 @@ System.out.println(object.getPreviousRevision(context));--->this method returns 
 
   System.out.println(stringNumber.getClass().getSimpleName()); ----->this statement returns the datatype of a varaible
 
+BusinessObject lastRev = domObj.getLastRevision(context); -->this method returns the last revision of the object
 
+BusinessObject newbo = lastRev.revise(context,lastRev.getNextSequence(context),lastRev.getVault()); -->this method used to revise the given oject	
