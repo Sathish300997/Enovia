@@ -1,0 +1,16 @@
+print system searchindex file C:\temp\config.xml;
+set system searchindex file "E:\Britannia\Builds\RITM0018862_RM Spec Characteristic Changes\config.xml";
+update searchindex type XVCMasterCharacteristic;
+
+
+3dSearch
+----------
+
+print system searchindex file "E:\Britannia\sathish R\config.xml";
+set system searchindex file "E:\Britannia\sathish R\config.xml";
+update searchindex type XVCMasterStorage;
+
+Object for Global Search
+-------------------------
+log bus 13552.24720.28540.63344  eventmonitor AdvancedSearch event bus custom;
+start searchindex mode partial;
