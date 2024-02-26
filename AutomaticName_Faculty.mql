@@ -1,0 +1,6 @@
+add bus "eService Object Generator" type_IZIFaculty "" policy "eService Object Generator" vault "eService Administration";
+add bus "eService Number Generator" type_IZIFaculty "" policy "eService Object Generator" vault "eService Administration";
+mod bus "eService Object Generator" type_IZIFaculty "" "eService Safety Vault" vault_eServiceAdministration "eService Safety Policy" policy_IZFacultyPolicy "eService Retry Delay" 100 "eService Retry Count" 5 "eService Processing Time Limit" 5 "eService Name Suffix" "" "eService Name Prefix" Faculty-F;
+mod bus "eService Number Generator" type_IZIFaculty "" "eService Next Number" 001;
+connect bus "eService Object Generator" type_IZIFaculty "" rel "eService Number Generator" to "eService Number Generator" type_IZIFaculty "";
+mod command IZIFAcultyCmd label Faculty href ${COMMON_DIR}/emxCreate.jsp?form=IZIFacultyForm&header=FacultyDetails&type=IZIFaculty&nameField=autoname;
