@@ -292,3 +292,16 @@ System.out.println(object.getPreviousRevision(context));--->this method returns 
 BusinessObject lastRev = domObj.getLastRevision(context); -->this method returns the last revision of the object
 
 BusinessObject newbo = lastRev.revise(context,lastRev.getNextSequence(context),lastRev.getVault()); -->this method used to revise the given oject	
+
+DomainObject plantWiseProductObj = new DomainObject();
+String plantName = "Sathish Tech";
+plantWiseProductObj.setAttributeValue(context, "xvcPlant", plantName); ---> this method set the attribute value(one only)
+
+
+
+Map attMap = new Map();
+                attMap.put("XVCChangeNumber", chngNumber);
+		attMap.put("XVCChangeNumberDescription", chngNumberDesc);
+		attMap.put("XVCAlternateBOMSeqNo", alternateBOMSeq);
+plantWiseProductObj.setAttributeValues(context,attMap);                          ---> this method set the list of attribute and its values
+              
