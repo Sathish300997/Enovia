@@ -190,3 +190,5 @@ add channel IZIInstituteChannel label InstituteChannel Height 250;
 
 
 list table system * select column.setting.value; //this query return the list of settings present in all table
+
+temp query bus "Project Space" * * where "originated >12/31/2015 && originated<1/1/2017" select id originated owner dump | output "E:\Sathish\ProjectDetails\PDJ_2016.txt";  //get the object between this dates
