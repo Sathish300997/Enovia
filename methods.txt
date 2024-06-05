@@ -304,4 +304,14 @@ Map attMap = new Map();
 		attMap.put("XVCChangeNumberDescription", chngNumberDesc);
 		attMap.put("XVCAlternateBOMSeqNo", alternateBOMSeq);
 plantWiseProductObj.setAttributeValues(context,attMap);                          ---> this method set the list of attribute and its values
-              
+
+
+String cmd = "print policy Product select state[Review].signature dump |";
+		MQLCommand mqlCmd = new MQLCommand();
+		mqlCmd.executeCommand(context, cmd);
+		String sReturn = mqlCmd.getResult();
+		StringList slSignatures = FrameworkUtil.split(sReturn, "|");
+		for(Object oSignature : slSignatures)
+		{
+			hd.append("<th align=\"center\" highLighted=\"false\" id=\""+(String)oSignature+"\" display=\""+(String)oSignature+"\"<FONT COLOR=\"\">"+(String)oSignature+"</FONT></th><th align=\"center\" highLighted=\"false\" id=\""+(String)oSignature+"NoDays\" display=\""+(String)oSignature+"NoDays\"<FONT COLOR=\"\"> No Of Days Pending</FONT></th>");
+		}
